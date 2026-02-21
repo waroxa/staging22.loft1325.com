@@ -25,10 +25,10 @@ defined( 'ABSPATH' ) || exit;
       />
     </a>
 
-    <div class="icon-button language-toggle loft1325-mobile-base-header__lang" aria-label="Language selector">
-      <a href="<?php echo esc_url( $fr_url ); ?>" class="language-toggle__label<?php echo 'fr' === $language ? ' is-active' : ''; ?>">FR</a>
-      <span class="language-toggle__separator">|</span>
-      <a href="<?php echo esc_url( $en_url ); ?>" class="language-toggle__label<?php echo 'en' === $language ? ' is-active' : ''; ?>">EN</a>
+    <div class="icon-button language-toggle loft1325-mobile-base-header__lang" aria-label="Language selector" style="display: flex; gap: 8px; align-items: center; cursor: pointer;">
+      <a href="<?php echo esc_url( $fr_url ); ?>" class="language-toggle__label<?php echo 'fr' === $language ? ' is-active' : ''; ?>" style="text-decoration: none; color: inherit; cursor: pointer;">FR</a>
+      <span class="language-toggle__separator" style="opacity: 0.5;">|</span>
+      <a href="<?php echo esc_url( $en_url ); ?>" class="language-toggle__label<?php echo 'en' === $language ? ' is-active' : ''; ?>" style="text-decoration: none; color: inherit; cursor: pointer;">EN</a>
     </div>
   </div>
 </header>
