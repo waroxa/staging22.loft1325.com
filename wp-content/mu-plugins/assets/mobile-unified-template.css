@@ -161,3 +161,46 @@
     border-color: #111 !important;
   }
 }
+
+
+  /* Remove gray background and spacing from hero/title sections */
+  body.loft1325-mobile-unified-active .hero,
+  body.loft1325-mobile-unified-active .nd_booking_single_cpt_1_title_container,
+  body.loft1325-mobile-unified-active [class*="title-container"],
+  body.loft1325-mobile-unified-active [class*="hero-section"] {
+    background: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  /* Hide duplicate/extra buttons, keep only the primary one */
+  body.loft1325-mobile-unified-active .nd_booking_button:nth-of-type(n+2),
+  body.loft1325-mobile-unified-active button[type="submit"]:nth-of-type(n+2),
+  body.loft1325-mobile-unified-active input[type="submit"]:nth-of-type(n+2) {
+    display: none !important;
+  }
+
+  /* Fix language switcher functionality */
+  body.loft1325-mobile-unified-active .language-toggle a,
+  body.loft1325-mobile-unified-active [class*="language"] a {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+  }
+
+  /* Remove borders and dividers between sections */
+  body.loft1325-mobile-unified-active .nd_booking_single_cpt_1_divider,
+  body.loft1325-mobile-unified-active [class*="divider"],
+  body.loft1325-mobile-unified-active hr {
+    display: none !important;
+  }
+
+  /* Clean up spacing in booking form */
+  body.loft1325-mobile-unified-active .nd_options_container,
+  body.loft1325-mobile-unified-active [class*="booking-form"] {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 16px !important;
+  }
+}
