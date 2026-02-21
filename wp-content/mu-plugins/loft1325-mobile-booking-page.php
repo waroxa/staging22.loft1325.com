@@ -75,6 +75,13 @@ function loft1325_mobile_unified_enqueue_styles() {
     $nd_booking_fixes_ver  = file_exists( $nd_booking_fixes_path ) ? (string) filemtime( $nd_booking_fixes_path ) : '1.0.0';
 
     wp_enqueue_style( 'loft1325-nd-booking-mobile-fixes', $nd_booking_fixes_url, array( 'loft1325-mobile-unified-template' ), $nd_booking_fixes_ver );
+
+    // Enqueue ND Booking mobile fixes JS
+    $nd_booking_fixes_js_path = __DIR__ . '/assets/nd-booking-mobile-fixes.js';
+    $nd_booking_fixes_js_url  = plugin_dir_url( __FILE__ ) . 'assets/nd-booking-mobile-fixes.js';
+    $nd_booking_fixes_js_ver  = file_exists( $nd_booking_fixes_js_path ) ? (string) filemtime( $nd_booking_fixes_js_path ) : '1.0.0';
+
+    wp_enqueue_script( 'loft1325-nd-booking-mobile-fixes-js', $nd_booking_fixes_js_url, array( 'jquery' ), $nd_booking_fixes_js_ver, true );
 }
 add_action( 'wp_enqueue_scripts', 'loft1325_mobile_unified_enqueue_styles', 210 );
 

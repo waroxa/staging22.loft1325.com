@@ -1,80 +1,74 @@
 /* ND Booking Mobile Fixes - Target the actual booking page rendering */
 
 @media (max-width: 767px) {
-  /* Remove gray background from the title/hero section */
+  /* 1. Remove the gray "RÉSERVATION" section and unwanted title area */
   .nd_booking_single_cpt_1_title,
   .nd_booking_single_cpt_1_title_container,
-  .nd_booking_title_section {
-    background: transparent !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-  }
-
-  /* Remove the border line between sections */
-  .nd_booking_single_cpt_1_divider,
-  .nd_booking_divider,
-  .nd_booking_border_bottom_1_solid_grey {
-    border: none !important;
+  .nd_booking_title_section,
+  .nd_booking_section_title {
     display: none !important;
   }
 
-  /* Hide duplicate submit buttons - keep only first one */
-  .nd_booking_button:nth-of-type(n+2),
-  button[type="submit"]:nth-of-type(n+2),
-  input[type="submit"]:nth-of-type(n+2) {
+  /* 2. Make dates, guests, and days text visible */
+  .nd_booking_archive_form_date_label,
+  .nd_booking_archive_form_guests_label,
+  .nd_booking_archive_form_nights_label,
+  .nd_booking_section span,
+  .nd_booking_section p,
+  .nd_booking_section strong {
+    color: #000 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  /* 3. Hide the extra "RÉSERVER" buttons and clean up bottom buttons */
+  .nd_booking_button,
+  input[type="submit"].nd_booking_button {
     display: none !important;
   }
 
-  /* Remove extra padding/margins from booking form container */
-  .nd_options_container {
-    padding: 0 16px !important;
-    margin: 0 !important;
-    background: transparent !important;
-  }
-
-  /* Clean up section spacing */
-  .nd_booking_section,
-  .nd_booking_form_section {
-    padding: 16px 0 !important;
-    margin: 0 !important;
-    border: none !important;
-  }
-
-  /* Fix button styling to show only one */
-  .nd_booking_button_wrapper {
-    display: flex !important;
-    justify-content: center !important;
-  }
-
-  .nd_booking_button_wrapper .nd_booking_button:first-child {
+  /* Show only the Finalise button and rename it later via JS */
+  .sticky-bar .primary-button,
+  button.primary-button {
     display: block !important;
   }
 
-  .nd_booking_button_wrapper .nd_booking_button:not(:first-child) {
+  /* 4. Remove borders around the form and sections */
+  .nd_options_container,
+  .nd_booking_section,
+  .nd_booking_form_section,
+  .nd_booking_border_bottom_1_solid_grey,
+  fieldset,
+  div[style*="border"] {
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 5. Hide the specific "Total Tax" row */
+  tr.nd_booking_tax_row,
+  .nd_booking_tax_total_row,
+  [class*="tax_total"] {
     display: none !important;
   }
 
-  /* Remove background colors from form sections */
-  .nd_booking_form,
-  .nd_booking_checkout_form,
-  .nd_booking_page_form {
-    background: transparent !important;
+  /* 6. Clean up section spacing */
+  .nd_booking_section,
+  .nd_booking_form_section {
+    padding: 8px 0 !important;
+    margin: 0 !important;
   }
 
-  /* Clean up any gray backgrounds */
-  [style*="background: #f"] {
-    background: transparent !important;
-  }
-
-  [style*="background-color: #f"] {
-    background-color: transparent !important;
-  }
-
-  /* Ensure language switcher is clickable */
+  /* 7. Ensure language switcher is clickable */
   .language-toggle a,
   .loft1325-mobile-base-header__lang a {
     pointer-events: auto !important;
     cursor: pointer !important;
+    z-index: 9999 !important;
+  }
+
+  /* Fix for invisible text in the booking summary */
+  .nd_booking_summary_item_label,
+  .nd_booking_summary_item_value {
+    color: #000 !important;
   }
 }
