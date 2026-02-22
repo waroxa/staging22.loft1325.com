@@ -1196,15 +1196,16 @@ body.loft-rooms-mobile [id^="nd_booking_search_cpt_"][id$="_content"] .loft-sear
     box-shadow: 0 22px 38px rgba(180, 83, 9, 0.45);
 }
 
-.loft-section-payment,
-.section {
+.loft-checkout-wrapper .loft-section-payment,
+.loft-checkout-wrapper .section {
     border-radius: 18px;
     background: #f9fafb;
     padding: 18px;
     border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
-.loft-section-payment h3 {
+.loft-checkout-wrapper .loft-section-payment h3,
+.loft-checkout-wrapper .section h3 {
     margin-bottom: 14px;
 }
 
