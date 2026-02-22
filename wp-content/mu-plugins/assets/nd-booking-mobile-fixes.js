@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function applyFixes() {
+    const bookingAction = getBookingAction();
+
     // 1. Rename "Grand Total" to "Total"
     const grandTotalLabels = document.querySelectorAll('th, td, span, strong, p');
     grandTotalLabels.forEach(label => {
@@ -27,18 +29,29 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // 3. Rename "FINALISER" button to "RÉSERVER" and make it the primary button
+    // 3. Keep the bottom "FINALISER" button as the only primary CTA and wire it to booking submit
     const finaliseBtn = document.querySelector('.sticky-bar .primary-button') || document.querySelector('button.primary-button');
     if (finaliseBtn) {
-      finaliseBtn.textContent = 'RÉSERVER';
-      
-      // If it doesn't have a click handler to submit the form, add one
-      finaliseBtn.addEventListener('click', function(e) {
-        const form = document.querySelector('form.nd_booking_form') || document.querySelector('form');
-        if (form) {
-          form.submit();
-        }
-      });
+      if (bookingAction && bookingAction.href && finaliseBtn.tagName.toLowerCase() === 'a') {
+        finaliseBtn.setAttribute('href', bookingAction.href);
+      }
+
+      if (!finaliseBtn.dataset.loft1325BookingBound) {
+        finaliseBtn.addEventListener('click', function(e) {
+          if (bookingAction && bookingAction.submit) {
+            e.preventDefault();
+            bookingAction.submit();
+            return;
+          }
+
+          const form = document.querySelector('form.nd_booking_form') || document.querySelector('form');
+          if (form) {
+            e.preventDefault();
+            form.submit();
+          }
+        });
+        finaliseBtn.dataset.loft1325BookingBound = '1';
+      }
     }
 
     // 4. Move reviews to the end of the content
@@ -53,6 +66,31 @@ document.addEventListener('DOMContentLoaded', function() {
     bookingButtons.forEach(btn => {
       btn.style.display = 'none';
     });
+  }
+
+  function getBookingAction() {
+    const firstVisibleBookingButton = Array.from(document.querySelectorAll('.nd_booking_button, input[type="submit"].nd_booking_button, a.nd_booking_button'))
+      .find(btn => window.getComputedStyle(btn).display !== 'none');
+
+    if (!firstVisibleBookingButton) {
+      return null;
+    }
+
+    const tagName = firstVisibleBookingButton.tagName.toLowerCase();
+    if (tagName === 'a') {
+      return {
+        href: firstVisibleBookingButton.getAttribute('href') || '',
+        submit: function() {
+          firstVisibleBookingButton.click();
+        }
+      };
+    }
+
+    return {
+      submit: function() {
+        firstVisibleBookingButton.click();
+      }
+    };
   }
 
   // Run fixes immediately and then every second for 5 seconds to catch dynamic content
