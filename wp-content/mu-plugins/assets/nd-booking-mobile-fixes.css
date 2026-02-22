@@ -27,11 +27,13 @@
     display: none !important;
   }
 
-  /* Show only the Finalise button and rename it later via JS */
+  /* Keep only the sticky final action button visible */
   .sticky-bar .primary-button,
-  button.primary-button {
+  .sticky-bar button.primary-button,
+  .sticky-bar a.primary-button {
     display: block !important;
   }
+
 
   /* 4. Remove borders around the form and sections */
   .nd_options_container,
@@ -59,6 +61,16 @@
   }
 
   /* 7. Ensure language switcher is clickable */
+  .loft1325-mobile-base-header__menu,
+  .loft1325-mobile-base-header .icon-button.loft1325-mobile-base-header__menu,
+  .loft1325-mobile-base-header button.icon-button.loft1325-mobile-base-header__menu {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    color: #0b0b0b !important;
+    box-shadow: none !important;
+  }
+
   .language-toggle a,
   .loft1325-mobile-base-header__lang a {
     pointer-events: auto !important;
