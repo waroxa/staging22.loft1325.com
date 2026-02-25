@@ -94,6 +94,93 @@ function marina_child_enqueue_custom_assets() {
 add_action( 'wp_enqueue_scripts', 'marina_child_enqueue_custom_assets', 20 );
 
 /**
+ * Fetch the list of published lofts that can be selected in intake forms.
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function marina_child_get_selectable_lofts() {
+    $query = new WP_Query(
+        array(
+            'post_type'      => 'nd_booking_cpt_1',
+            'post_status'    => 'publish',
+            'posts_per_page' => -1,
+            'orderby'        => 'title',
+            'order'          => 'ASC',
+            'fields'         => 'ids',
+        )
+    );
+
+    if ( empty( $query->posts ) ) {
+        return array();
+    }
+
+    $lofts = array();
+
+    foreach ( $query->posts as $loft_id ) {
+        $title = get_the_title( $loft_id );
+
+        if ( '' === trim( (string) $title ) ) {
+            $title = sprintf( __( 'Loft #%d', 'marina-child' ), (int) $loft_id );
+        }
+
+        $lofts[] = array(
+            'id'    => (int) $loft_id,
+            'label' => sanitize_text_field( $title ),
+        );
+    }
+
+    return $lofts;
+}
+
+/**
+ * Ajax endpoint used by the checkout/intake loft selector field.
+ */
+function marina_child_ajax_get_loft_options() {
+    wp_send_json_success(
+        array(
+            'lofts' => marina_child_get_selectable_lofts(),
+        )
+    );
+}
+add_action( 'wp_ajax_loft1325_get_loft_options', 'marina_child_ajax_get_loft_options' );
+add_action( 'wp_ajax_nopriv_loft1325_get_loft_options', 'marina_child_ajax_get_loft_options' );
+
+/**
+ * Load front-end script that upgrades the free-text loft id field into a select list.
+ */
+function marina_child_enqueue_loft_selector_enhancer() {
+    if ( is_admin() ) {
+        return;
+    }
+
+    $script_path = get_stylesheet_directory() . '/js/loft-id-field-enhancer.js';
+
+    if ( ! file_exists( $script_path ) ) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'marina-child-loft-id-field-enhancer',
+        get_stylesheet_directory_uri() . '/js/loft-id-field-enhancer.js',
+        array(),
+        (string) filemtime( $script_path ),
+        true
+    );
+
+    wp_localize_script(
+        'marina-child-loft-id-field-enhancer',
+        'loft1325LoftSelector',
+        array(
+            'ajaxUrl'       => admin_url( 'admin-ajax.php' ),
+            'action'        => 'loft1325_get_loft_options',
+            'defaultOption' => __( 'Sélectionner un loft…', 'marina-child' ),
+            'emptyOption'   => __( 'Aucun loft disponible', 'marina-child' ),
+        )
+    );
+}
+add_action( 'wp_enqueue_scripts', 'marina_child_enqueue_loft_selector_enhancer', 80 );
+
+/**
  * Load the elevated search experience styles when needed.
  */
 function marina_child_enqueue_search_styles() {
